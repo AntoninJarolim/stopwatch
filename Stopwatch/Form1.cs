@@ -126,7 +126,13 @@ namespace MyStopwatch
             string itemName = itemNameTextbox.Text;
             if (listView.Items.ContainsKey(itemName) == false)
             {
-                if (itemName == "" || itemName == "Enter item name")
+                if (itemName.Contains(';'))
+                {
+                    const string message = "Name can not contain ';'.";
+                    const string caption = "Invalid name entered";
+                    showAlertBox(message, caption);
+                }
+                else if (itemName == "" || itemName == "Enter item name")
                 {
                     const string message = "Please enter time stamp name.";
                     const string caption = "No name entered";
@@ -135,6 +141,7 @@ namespace MyStopwatch
                 else
                 {
                     // current timespan is saved in ts variable
+                    infoLabel.Text = "";
                     createListViewItem(itemName, ts.ToString());
                 }
             }

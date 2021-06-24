@@ -269,6 +269,7 @@
             this.itemName,
             this.timestamp});
             this.listView.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.listView.ForeColor = System.Drawing.SystemColors.Info;
             this.listView.FullRowSelect = true;
             this.listView.HideSelection = false;
             this.listView.Location = new System.Drawing.Point(374, 48);
@@ -320,6 +321,7 @@
             this.Controls.Add(this.restartButton);
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.pauseButton);
+            this.MaximumSize = new System.Drawing.Size(750, 360);
             this.MinimumSize = new System.Drawing.Size(750, 360);
             this.Name = "stopwatchForm";
             this.Text = "Stopwatch";

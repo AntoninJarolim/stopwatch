@@ -7,7 +7,7 @@
     <ProjectGuid>{948D0A30-8D8D-44B9-AF9A-8543FB2094E8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>MyStopwatch</RootNamespace>
-    <AssemblyName>MyStopwatch</AssemblyName>
+    <AssemblyName>Stopwatch</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
