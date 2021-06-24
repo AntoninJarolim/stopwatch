@@ -48,6 +48,7 @@
             this.listView = new System.Windows.Forms.ListView();
             this.itemName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.timestamp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.infoLabel = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // pauseButton
@@ -179,7 +180,7 @@
             // saveAsButton
             // 
             this.saveAsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.saveAsButton.Location = new System.Drawing.Point(609, 291);
+            this.saveAsButton.Location = new System.Drawing.Point(609, 301);
             this.saveAsButton.Name = "saveAsButton";
             this.saveAsButton.Size = new System.Drawing.Size(100, 36);
             this.saveAsButton.TabIndex = 16;
@@ -191,7 +192,7 @@
             // saveButton
             // 
             this.saveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.saveButton.Location = new System.Drawing.Point(492, 291);
+            this.saveButton.Location = new System.Drawing.Point(492, 301);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(100, 36);
             this.saveButton.TabIndex = 17;
@@ -199,11 +200,12 @@
             this.saveButton.Text = "Save";
             this.saveButton.Theme = MetroFramework.MetroThemeStyle.Dark;
             this.saveButton.UseSelectable = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // loadButton
             // 
             this.loadButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.loadButton.Location = new System.Drawing.Point(374, 291);
+            this.loadButton.Location = new System.Drawing.Point(374, 301);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(100, 36);
             this.loadButton.TabIndex = 18;
@@ -258,10 +260,11 @@
             this.itemNameTextbox.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.itemNameTextbox.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.itemNameTextbox.Click += new System.EventHandler(this.itemNameTextbox_Click);
+            this.itemNameTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.itemNameTextbox_KeyDown);
             // 
             // listView
             // 
-            this.listView.BackColor = System.Drawing.Color.DimGray;
+            this.listView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.itemName,
             this.timestamp});
@@ -285,11 +288,21 @@
             this.timestamp.Text = "Timestamp";
             this.timestamp.Width = 200;
             // 
+            // infoLabel
+            // 
+            this.infoLabel.Location = new System.Drawing.Point(492, 340);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(217, 23);
+            this.infoLabel.TabIndex = 23;
+            this.infoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.infoLabel.Theme = MetroFramework.MetroThemeStyle.Dark;
+            // 
             // stopwatchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 360);
+            this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.itemNameTextbox);
             this.Controls.Add(this.SaveItemButton);
@@ -336,6 +349,7 @@
         private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.ColumnHeader itemName;
         private System.Windows.Forms.ColumnHeader timestamp;
+        private MetroFramework.Controls.MetroLabel infoLabel;
     }
 }
 

@@ -18,6 +18,7 @@ namespace MyStopwatch
         Timer timer = new Timer();
         Stopwatch stopWatch = new Stopwatch();
         TimeSpan ts = new TimeSpan(); // timeSpan holding elapsed time
+        string filePath = "";
 
         public stopwatchForm()
         {
@@ -77,6 +78,7 @@ namespace MyStopwatch
         private void createListViewItem(string name, string timeStamp)
         {
             ListViewItem item = new ListViewItem(name); // creates item with name
+            item.Name = name;
             item.SubItems.Add(timeStamp); // addes timestamp to item
             listView.Items.Add(item);
         }
@@ -97,15 +99,16 @@ namespace MyStopwatch
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Read the contents of the file into a stream
+                    // read the file content into a stream
                     var fileStream = openFileDialog.OpenFile();
-
+                    filePath = openFileDialog.FileName;
                     using (StreamReader file = new StreamReader(fileStream))
                     {
                         while ((line = file.ReadLine()) != null)
                         {
                             loadLineToListView(line);
                         }
+                        infoLabel.Text = "Loaded!";
                     }
                 }
             }
@@ -120,51 +123,83 @@ namespace MyStopwatch
 
         private void SaveItemButton_Click(object sender, EventArgs e)
         {
-            if(itemNameTextbox.Text == "" || itemNameTextbox.Text == "Enter item name")
+            string itemName = itemNameTextbox.Text;
+            if (listView.Items.ContainsKey(itemName) == false)
             {
-                const string message = "Please enter time stamp name.";
-                const string caption = "No name entered";
-                showAlertBox(message, caption);
+                if (itemName == "" || itemName == "Enter item name")
+                {
+                    const string message = "Please enter time stamp name.";
+                    const string caption = "No name entered";
+                    showAlertBox(message, caption);
+                }
+                else
+                {
+                    // current timespan is saved in ts variable
+                    createListViewItem(itemName, ts.ToString());
+                }
             }
             else
             {
-                // current timespan is saved in ts variable
-                createListViewItem(itemNameTextbox.Text, ts.ToString());
+                const string message = "Please enter uniq name.";
+                const string caption = "Entered name is already saved.";
+                showAlertBox(message, caption);
+            }
+            
+        }
+        private void itemNameTextbox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) // hit save item button when pressed enter
+            {
+                SaveItemButton_Click(this, new EventArgs());
             }
         }
-
         private void itemNameTextbox_Click(object sender, EventArgs e)
         {
             itemNameTextbox.Text = ""; // clears textbox when clicked  
         }
 
-        private void saveToCss(string fileContent)
+
+        private string getPathToSave()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "csv files (*.csv)|*.csv|all files (*.*)|*.*|txt files (*.txt)|*.txt";
             saveFileDialog.Title = "Save to csv file.";
             saveFileDialog.ShowDialog();
-            string path = saveFileDialog.FileName;
-
-            if (saveFileDialog.FileName != "")
-            {
-                File.WriteAllText(path, fileContent);
-            }
-            else
-            {
-                const string message = "Please enter valid file name.";
-                const string caption = "Invalid file name";
-                showAlertBox(message, caption);
-            }            
+            return saveFileDialog.FileName;
         }
-        private void saveAsButton_Click(object sender, EventArgs e)
+        private void saveToCss(string fileContent)
+        {
+            if (filePath != "")
+            {
+                File.WriteAllText(filePath, fileContent);
+                infoLabel.Text = "Saved!";
+            }          
+        }
+        private string listWiewItemsToCsvString()
         {
             string fileContent = "";
             for (int i = 0; i < listView.Items.Count; i++)
             {
                 fileContent += listView.Items[i].Text + ";" + listView.Items[i].SubItems[1].Text + Environment.NewLine;
             }
+            return fileContent;
+        }
+        private void saveAsButton_Click(object sender, EventArgs e)
+        {
+            string fileContent = listWiewItemsToCsvString();
+            filePath = getPathToSave();
             saveToCss(fileContent);
         }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            if(filePath == "")
+            {
+                filePath = getPathToSave();
+            }
+            string fileContent = listWiewItemsToCsvString();
+            saveToCss(fileContent);
+        }
+
     }
 }
